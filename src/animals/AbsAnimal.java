@@ -61,16 +61,22 @@ public abstract class AbsAnimal {
 
 @Override
     public String toString(){
-        return String.format("Привет! Меня зовут %s, мне %d %s, я вешу - %d кг, мой цвет - %s", name, age, , weight, color.getName());
+        return String.format("Привет! Меня зовут %s, мне %d %s, я вешу - %d кг, мой цвет - %s", name, age, this.getAgeCase(), weight, color.getName());
 }
-    private StringGetAgeCase(){
+    private String getAgeCase(){
         int ostatok = age % 10;
-        if (ostatok> 5 || ostatok<9){
 
+        if (ostatok==1){
+            return "год";
+        }
+
+        if (ostatok==0 || ostatok >= 5 || age>=11){
+            return "лет";
+        }
+        return "года";
         }
 
 
     }
 
 
-}
