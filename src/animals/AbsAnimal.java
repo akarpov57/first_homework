@@ -2,11 +2,20 @@ package animals;
 
 import data.ColorData;
 
+// java.lang.classfile.attribute.LineNumberTableAttribute;
+
 public abstract class AbsAnimal {
-    private String name ="";
+    private String name = "";
     private int age = -1;
-    private int weight =-1;
+    private int weight = -1;
     private ColorData color = null;
+
+    public AbsAnimal(String name, int age, int weight, ColorData color){
+        this.name = name;
+        this.age = age;
+        this.weight = weight;
+        this.color = color;
+    }
 
     public String getName(){
         return name;
@@ -61,7 +70,8 @@ public abstract class AbsAnimal {
 
 @Override
     public String toString(){
-        return String.format("Привет! Меня зовут %s, мне %d %s, я вешу - %d кг, мой цвет - %s", name, age, this.getAgeCase(), weight, color.getName());
+        return String.format("Привет! Меня зовут %s, мне %d %s, я вешу - %d кг, мой цвет - %s", name, age,
+                this.getAgeCase(), weight, color.getName());
 }
     private String getAgeCase(){
         int ostatok = age % 10;
