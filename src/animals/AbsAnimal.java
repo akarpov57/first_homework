@@ -7,7 +7,7 @@ import data.ColorData;
 public abstract class AbsAnimal {
     private String name = "";
     private int age = -1;
-    private int weight = -1;
+    private float weight =0F;
     private ColorData color = null;
 
     public AbsAnimal(String name, int age, int weight, ColorData color){

@@ -4,6 +4,7 @@ import data.ColorData;
 import data.CommandsData;
 import factory.FactoryAnimal;
 import utils.InputUtils;
+import utils.NumberUtils;
 
 import java.util.*;
 
@@ -13,9 +14,10 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         List<AbsAnimal> animals = new ArrayList<>();
 
-        CommandsData[] commandsData = CommandsData.values();
-
         InputUtils inputUtils = new InputUtils(scanner);
+        NumberUtils numberUtils = new NumberUtils();
+
+        CommandsData[] commandsData = CommandsData.values();
 
         List<String> commandsNames = new ArrayList<>();
         for (CommandsData commandType : commandsData) {
@@ -23,12 +25,9 @@ public class Main {
         }
         while (true) {
             String commandStringUser = inputUtils.inputWithValidation(
-                    String.format("Введите одну из команд %s:\n", String.join("/", commandsNames)),
-                    CommandsData.class, "Вы ввели неверную команду. Повторите ввод:"
+                    String.format("Р’РІРµРґРёС‚Рµ РѕРґРЅСѓ РёР· РєРѕРјР°РЅРґ %s:\n", String.join("/", commandsNames)),
+                    CommandsData.class, "Р’С‹ РІРІРµР»Рё РЅРµРІРµСЂРЅСѓСЋ РєРѕРјР°РЅРґСѓ. РџРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ:"
             );
- //           System.out.printf("Введите одну из команд %s:\n", String.join("/", commandsNames));
- //           String commandStringUser = scanner.next();
-
             boolean isCommandExist = false;
             for (CommandsData command : commandsData) {
                 if (command.name().equals(commandStringUser.trim().toUpperCase())) {
@@ -37,30 +36,44 @@ public class Main {
                 }
             }
             if (!isCommandExist) {
-                System.out.println("Вы ввели неверную команду. Повторите ввод");
+                System.out.println("Р’С‹ РІРІРµР»Рё РЅРµРІРµСЂРЅСѓСЋ РєРѕРјР°РЅРґСѓ. РџРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ");
                 continue;
             }
             switch (CommandsData.valueOf(commandStringUser)) {
                 case ADD: {
-
                     List<String> animalTypesNames = new ArrayList<>();
                     for (AnimalTypesData animalTypesData : AnimalTypesData.values()) {
                         animalTypesNames.add(animalTypesData.name().toLowerCase());
                     }
-
                     String animalTypesStringUser = inputUtils.inputWithValidation(
-                            String.format("Введите один из типов животного %s:\n", String.join("/", animalTypesNames)),
-                            AnimalTypesData.class, "Вы ввели неверный тип животного.");
+                            String.format("Р’РІРµРґРёС‚Рµ РѕРґРёРЅ РёР· С‚РёРїРѕРІ Р¶РёРІРѕС‚РЅРѕРіРѕ %s:\n", String.join("/", animalTypesNames)),
+                            AnimalTypesData.class, "Р’С‹ РІРІРµР»Рё РЅРµРІРµСЂРЅС‹Р№ С‚РёРї Р¶РёРІРѕС‚РЅРѕРіРѕ.");
 
-
-                    System.out.println("Введите имя животного:");
+                    System.out.println("Р’РІРµРґРёС‚Рµ РёРјСЏ Р¶РёРІРѕС‚РЅРѕРіРѕ:");
                     String name = scanner.next();
 
-                    System.out.println("Введите возраст животного:");
-                    int age = Integer.parseInt(scanner.next());
+                    Integer age;
+                    for (; ;) {
+                        System.out.println("Р’РІРµРґРёС‚Рµ РІРѕР·СЂР°СЃС‚ Р¶РёРІРѕС‚РЅРѕРіРѕ:");
+                        try {
+                            age = Integer.valueOf(scanner.next().trim());
+                            break;
+                        } catch (NumberFormatException e) {
+                            System.out.println("Р’С‹ РІРІРµР»Рё РІРѕР·СЂР°СЃС‚ Р¶РёРІРѕС‚РЅРѕРіРѕ РІ РЅРµРІРµСЂРЅРѕРј С„РѕСЂРјР°С‚Рµ. Р’РѕР·СЂР°СЃС‚ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ С†РµР»С‹Рј С‡РёСЃР»РѕРј.");
+                        }
+                    }
 
-                    System.out.println("Введите вес животного:");
-                    int weight = Integer.parseInt(scanner.next());
+                    Float weight;
+                    for (; ; ) {
+                        System.out.println("Р’РІРµРґРёС‚Рµ РІРµСЃ Р¶РёРІРѕС‚РЅРѕРіРѕ:");
+                        try {
+                            weight = Float.valueOf(scanner.next().trim());
+                            break;
+                        } catch (NumberFormatException e) {
+                            System.out.println("Р’С‹ РІРІРµР»Рё РІРµСЃ Р¶РёРІРѕС‚РЅРѕРіРѕ РІ РЅРµРІРµСЂРЅРѕРј С„РѕСЂРјР°С‚Рµ. Р’РµСЃ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ С‡РёСЃР»РѕРј СЃ РїР»Р°РІР°СЋС‰РµР№ С‚РѕС‡РєРѕР№.");
+                        }
+                    }
+
 
                     List<String> colorDataNames = new ArrayList<>();
                     for (ColorData colorData : ColorData.values()) {
@@ -68,23 +81,12 @@ public class Main {
                     }
 
                     String colorDataStr = inputUtils.inputWithValidation(
-                            String.format("Введите один из цветов животного %s:\n", String.join("/", colorDataNames)),
-                            ColorData.class, "Вы ввели неверный цвет животного.");
-                    ;
-                    //   while (true) {
-                    //      System.out.printf("Введите цвет животного %s: ", String.join("/", colorDataNames));
-                    //      String colorDataStr = scanner.next();
+                            String.format("Р’РІРµРґРёС‚Рµ РѕРґРёРЅ РёР· С†РІРµС‚РѕРІ Р¶РёРІРѕС‚РЅРѕРіРѕ %s:\n", String.join("/", colorDataNames)),
+                            ColorData.class, "Р’С‹ РІРІРµР»Рё РЅРµРІРµСЂРЅС‹Р№ С†РІРµС‚ Р¶РёРІРѕС‚РЅРѕРіРѕ.");
 
-                    //     if (enumUtils.checkValueEnum(ColorData.class, colorDataStr)) {
-                    //         break;
-                    //     }
-                    //    System.out.printf("Цвет %s не поддерживается", colorDataStr);
-
-
-                    // }
                     ColorData colorData = ColorData.valueOf(colorDataStr);
                     AbsAnimal animal = new FactoryAnimal(name, age, weight, colorData).create(AnimalTypesData.valueOf(animalTypesStringUser));
-
+                    animals.add(animal);
                     break;
                 }
                 case LIST: {
@@ -92,7 +94,7 @@ public class Main {
                     break;
                 }
                 case EXIT: {
-                    System.out.println("Вы вышли из программы");
+                    System.out.println("Р’С‹ РІС‹С€Р»Рё РёР· РїСЂРѕРіСЂР°РјРјС‹");
                     System.exit(0);
                 }
             }
