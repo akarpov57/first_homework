@@ -11,10 +11,10 @@ import exceptions.AnimalTypeNotSupportedException;
 public class FactoryAnimal {
     private String name;
     private int age;
-    private float weight;
+    private int weight;
     private ColorData colorData;
 
-    public FactoryAnimal(String name, int age, float weight, ColorData color){
+    public FactoryAnimal(String name, int age, int weight, ColorData color){
         this.name = name;
         this.age= age;
         this.weight = weight;

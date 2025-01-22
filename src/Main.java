@@ -15,7 +15,7 @@ public class Main {
         List<AbsAnimal> animals = new ArrayList<>();
 
         InputUtils inputUtils = new InputUtils(scanner);
-        NumberUtils numberUtils = new NumberUtils();
+        //NumberUtils numberUtils = new NumberUtils();
 
         CommandsData[] commandsData = CommandsData.values();
 
@@ -62,19 +62,16 @@ public class Main {
                             System.out.println("Вы ввели возраст животного в неверном формате. Возраст должен быть целым числом.");
                         }
                     }
-
-                    Float weight;
+                    Integer weight;
                     for (; ; ) {
                         System.out.println("Введите вес животного:");
                         try {
-                            weight = Float.valueOf(scanner.next().trim());
+                            weight = Integer.valueOf(scanner.next().trim());
                             break;
                         } catch (NumberFormatException e) {
-                            System.out.println("Вы ввели вес животного в неверном формате. Вес должен быть числом с плавающей точкой.");
+                            System.out.println("Вы ввели вес животного в неверном формате. Вес должен быть целым числом.");
                         }
                     }
-
-
                     List<String> colorDataNames = new ArrayList<>();
                     for (ColorData colorData : ColorData.values()) {
                         colorDataNames.add(colorData.name().toLowerCase());
